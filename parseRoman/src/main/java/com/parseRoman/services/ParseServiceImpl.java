@@ -1,15 +1,19 @@
 package com.parseRoman.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ParseServiceImpl implements ParseService{
+	
+	 @Autowired
+	public ParseServiceImpl() {
+	}
 
 	@Override
 	public String numberToRoman(int num) {
-		System.out.println("ENTRE AL PARSE");
 		if(num == 0) {
-			throw new IllegalArgumentException(String.format("El numero debe ser mayor a 0", ""));
+			throw new IllegalArgumentException(String.format("El numero debe ser mayor a 0"));
 		}
 		
 //		System.out.println("Integer: " + num);  

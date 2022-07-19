@@ -50,10 +50,9 @@ public class RomanController {
 		String test = "1";
 
 		try {
-			System.out.println("TESTERO " + num.getNumeroRom());
 			test = parseService.numberToRoman(Integer.valueOf(num.getNumeroRom()));
-			System.out.println("TESTERO2 " + test);
-			return new ResponseEntity(test, HttpStatus.OK);			
+			return new ResponseEntity(test, HttpStatus.OK);		
+			
 		} catch (IllegalArgumentException e) {
 			System.out.println("TESTERO3");
 

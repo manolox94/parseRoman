@@ -1,10 +1,8 @@
 package com.parseRoman;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -19,9 +17,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
 import com.parseRoman.controllers.RomanController;
@@ -69,5 +64,25 @@ class ParseRomanApplicationTests {
 
 //		assertEquals("I",result.getResponse().getContentAsString());
 	}
+	
+	@Test
+	void contextLoadsError() throws Exception {
+		
+		Mockito.when(parseService.numberToRoman(0)).thenReturn("error");
+		
+		doThrow(IllegalArgumentException.class).when(parseService).numberToRoman(0);
+		
+		mvc.perform(post("/test/parsePost")
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .content("{\"numeroRom\": \"0\"}"))
+         .andDo(print())
+         .andExpect(status().isBadRequest())
+         .andExpect(content().string(""));
+		
+		verify(parseService, times(1)).numberToRoman(0);
+		
+	}
+
+		
 
 }

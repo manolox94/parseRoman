@@ -3,7 +3,7 @@ package com.parseRoman;
 
 public class Numeros {
 	
-	String numeroRom;
+	private String numeroRom;
 	
 	public Numeros(){
 	}
